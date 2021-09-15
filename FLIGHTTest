@@ -1,0 +1,105 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class FlightDROPDOWN_Practice1 {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+
+		
+		System.setProperty("webdriver.chrome.driver", "/Users/tasfiqueshantanu/Documents/SELENIUM/chromedriver");
+		
+		WebDriver driver = new ChromeDriver ();
+		driver.manage().window().maximize();
+		
+		driver.get("https://rahulshettyacademy.com/dropdownsPractise/");
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		
+		System.out.println(driver.getCurrentUrl());
+		System.out.println(driver.getTitle());
+
+		//Select round trip
+		driver.findElement(By.id("ctl00_mainContent_rbtnl_Trip_1")).click();
+		
+		//Departure from Ahmedabad
+		driver.findElement(By.id("ctl00_mainContent_ddl_originStation1_CTXT")).click();
+		driver.findElement(By.xpath("//a[@value='AMD']")).click();
+		
+		//Arrival to Goa
+		driver.findElement(By.xpath("(//a[@value='GOI'])[2]")).click();
+		
+		//Departure date - October 10th
+		driver.findElement(By.xpath("//a[normalize-space()='10']")).click();
+		
+		//Arrival date - October 20th
+		driver.findElement(By.id("ctl00_mainContent_view_date2")).click();
+		driver.findElement(By.xpath("//a[@class='ui-state-default ui-state-active ui-state-hover']")).click();
+		
+		//Number of Passengers - 3 adults, 4 children, 3 infants
+		driver.findElement(By.id("divpaxinfo")).click();
+		
+		System.out.println(driver.findElement(By.id("divpaxinfo")).getText());
+		
+			//3 Adults
+		WebElement add_adult = driver.findElement(By.id("hrefIncAdt"));
+		
+		int a = 1;
+		
+		while (a<3)
+		{
+			add_adult.click();
+			a++;
+		}
+		System.out.println(driver.findElement(By.id("divpaxinfo")).getText());
+		
+			//4 Children
+		WebElement add_children = driver.findElement(By.id("hrefIncChd"));
+		
+		int c = 1;
+		
+		while (c<4)
+		{
+			add_children.click();
+			c++;
+		}
+		System.out.println(driver.findElement(By.id("divpaxinfo")).getText());
+		
+			//3 Infants
+		WebElement add_infant = driver.findElement(By.id("hrefIncInf"));
+		
+		int i = 1;
+		
+		while (i<3)
+		{
+			add_infant.click();
+			i++;
+		}
+		System.out.println(driver.findElement(By.id("divpaxinfo")).getText());
+		
+		//Pay with USD
+		WebElement currency = (driver.findElement(By.id("ctl00_mainContent_DropDownListCurrency")));
+		currency.click();
+		
+		Select dropdown = new Select (currency);
+		
+		dropdown.selectByValue("USD");
+		
+		//Click on search
+		driver.findElement(By.id("ctl00_mainContent_btn_FindFlights")).click();
+	
+		
+		driver.close();
+		
+		System.out.println("Test has Passed");
+		
+		
+		
+		
+	}
+
+}
