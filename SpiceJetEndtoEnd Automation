@@ -1,0 +1,92 @@
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+public class EndtoEnd_Exercicise {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+
+		//oneway trip
+	
+		//Check if arrival date is disabled
+		
+		System.setProperty("webdriver.chrome.driver", "/Users/tasfiqueshantanu/Documents/SELENIUM/chromedriver");
+		
+		WebDriver driver = new ChromeDriver ();
+		
+		driver.manage().window().maximize();
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		driver.get("https://book.spicejet.com/");
+		
+		//select family and friends
+		driver.findElement(By.id("ControlGroupSearchView_AvailabilitySearchInputSearchView_FamilyAndFriends")).click();
+		
+		//Departure City - Delhi
+		driver.findElement(By.id("ControlGroupSearchView_AvailabilitySearchInputSearchVieworiginStation1_CTXT")).click();
+		driver.findElement(By.xpath("//A[@value= 'DEL']")).click();
+		
+		Thread.sleep(2000);
+		
+		//Arrival City - Chennai
+		driver.findElement(By.xpath("(//A[@value= 'MAA'])[2]")).click();
+		Thread.sleep(1000);
+		
+		//Date
+		WebElement current_date = driver.findElement(By.cssSelector(".ui-state-default.ui-state-highlight.ui-state-active"));
+		current_date.click();
+		
+		//Check if Return Date is disabled
+		//System.out.println(driver.findElement(By.id("custom_date_picker_id_2")).isEnabled());
+		
+		if(driver.findElement(By.id("spclearDate")).getAttribute("style").contains("block"))
+		{
+			System.out.println("Return Date is enabled");
+			Assert.assertTrue(false);
+		}
+		else
+		{
+			Assert.assertTrue(true);
+		}
+	
+		//2 - 3 adults
+		driver.findElement(By.id("divpaxinfo")).click();
+		
+		WebElement adult = driver.findElement(By.id("ControlGroupSearchView_AvailabilitySearchInputSearchView_DropDownListPassengerType_ADT"));
+		adult.click();
+		
+		Select dropdown = new Select (adult);
+		dropdown.selectByValue("3");
+		adult.click();
+		
+		Thread.sleep(1000);
+		
+		//Select Payment
+		WebElement currency = driver.findElement(By.id("ControlGroupSearchView_AvailabilitySearchInputSearchView_DropDownListCurrency"));
+		currency.click();
+		
+		Select dropdown2 = new Select (currency);
+		dropdown2.selectByVisibleText("USD");
+		
+	
+		
+		driver.findElement(By.id("ControlGroupSearchView_AvailabilitySearchInputSearchView_ButtonSubmit")).click();
+	
+		
+		driver.quit();
+		
+		System.out.println("Test has passed");
+		
+	
+		
+		
+	}
+
+}
