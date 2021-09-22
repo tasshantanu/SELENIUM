@@ -1,0 +1,89 @@
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class EXPEDIA_Test {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+
+		
+//		Go to https://expedia.com and create a script for following steps:
+//
+//			i.	Click on flights tab
+//			ii.	Fill the form to search flight for roundtrip and click on search button
+//			iii.	Select the flights
+//			iv.	Click on “No thanks” for pop-up
+//			v.	Click on continue booking button
+//			vi.	Fill the passenger’s information
+
+		
+		System.setProperty("webdriver.chrome.driver", "/Users/tasfiqueshantanu/Documents/SELENIUM/chromedriver");
+		WebDriver driver = new ChromeDriver ();
+		
+		driver.manage().window().maximize();
+		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		
+		driver.get("https://www.expedia.com");
+		
+		//click on flights tab
+		driver.findElement(By.xpath("(//span[@class='uitk-tab-text'])[2]")).click();
+		
+		//Fill in the form
+		WebElement departure = driver.findElement(By.xpath("//button[@class='uitk-faux-input']"));
+		departure.sendKeys("New York");
+		
+		//Scan through and select LaGuardia for Departure
+		List <WebElement> options1 = driver.findElements(By.cssSelector("div[class='truncate']"));
+		
+		for (WebElement option1: options1)
+		{
+			if (option1.getText().equalsIgnoreCase("New York (LGA - LaGuardia)"))
+			{
+				option1.click();
+				break;
+			}
+		}
+		
+		
+		//Scan through and select Austin, Texas for departure
+		WebElement arrival = driver.findElement(By.xpath("(//button[@class='uitk-faux-input'])[2]"));
+		arrival.sendKeys("Austin");
+		Thread.sleep(2000);
+		
+		List <WebElement> options2 = driver.findElements (By.cssSelector("div[class='truncate'] strong"));
+		
+		for (WebElement option2: options2)
+		{
+			if (option2.getText().equalsIgnoreCase("Austin (AUS - Austin-Bergstrom Intl.)"))
+			{
+				option2.click();
+				break;
+				
+			}
+		}
+		
+		//Select October 13th for departure date
+		driver.findElement(By.id("d1-btn")).click();
+		Thread.sleep(2000);
+		
+		WebElement date1 = driver.findElement(By.xpath("//button[@aria-label='Oct 13, 2021']"));
+		date1.click();
+
+		//Fix code here
+		WebElement date2 = driver.findElement(By.xpath("//button[@aria-label='Oct 16, 2021 selected, current check out date.']"));
+		date2.click();
+		
+		driver.findElement(By.xpath("//button[normalize-space()='Done']")).click();
+		
+		driver.findElement(By.xpath("//button[normalize-space()='Search']")).click();
+		
+	}
+
+}
