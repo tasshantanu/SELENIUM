@@ -1,0 +1,59 @@
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class SeperateTabs_PRACTICE {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		// SELECT ANY CHECKBOX
+		// Grab the label of the selected checkbox ----- put it into variable
+		// Select the option in dropdown without hardcoding
+		// Enter the test from step 2 in edit box
+		// Click alert and verify if text grabbed from step 2 is there
+
+		System.out.println("Main Start: ");
+
+		System.setProperty("webdriver.chrome.driver", "/Users/tasfiqueshantanu/Documents/SELENIUM/chromedriver");
+		WebDriver driver = new ChromeDriver();
+
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
+
+		WebElement option2 = driver.findElement(By.id("checkBoxOption2"));
+
+		option2.click();
+
+		String opt2 = driver.findElement(By.xpath("//div[@id =\"checkbox-example\"]/fieldset/label[2]")).getText();
+
+		WebElement dropdown = driver.findElement(By.id("dropdown-class-example"));
+		dropdown.click();
+
+		Select options = new Select(dropdown);
+
+		options.selectByVisibleText(opt2);
+
+		driver.findElement(By.id("name")).sendKeys(opt2);
+		driver.findElement(By.id("alertbtn")).click();
+
+		String alert = driver.switchTo().alert().getText();
+
+		if (alert.contains(opt2)) {
+			System.out.println("Alert has passed");
+		} else {
+			System.out.println("Alert has failed");
+		}
+
+		driver.quit();
+
+	}
+
+}
