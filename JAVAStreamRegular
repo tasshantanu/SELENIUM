@@ -1,0 +1,34 @@
+import java.util.ArrayList;
+
+public class JavaSTREAM_RAHULSHETTY {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		// Create a program and Count the number of names starting with the letter A
+
+		ArrayList<String> names = new ArrayList<String>();
+		names.add("Adam");
+		names.add("Jennifer");
+		names.add("Tas");
+		names.add("Anca");
+		names.add("Marc");
+		names.add("John");
+		names.add("Angel");
+
+		int count = 0;
+
+		for (int i = 0; i < names.size(); i++) {
+			String Actual = names.get(i);
+			if (Actual.startsWith("A"))
+
+			{
+				count++;
+			}
+
+		}
+		System.out.println(count);
+
+	}
+
+}
