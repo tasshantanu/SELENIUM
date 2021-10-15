@@ -1,0 +1,60 @@
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Q9_BOOTCAMP_PIIT {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		System.out.println("Main Start: ");
+
+		System.setProperty("webdriver.chrome.driver", "/Users/tasfiqueshantanu/Documents/SELENIUM/chromedriver");
+		WebDriver driver = new ChromeDriver();
+
+		driver.manage().window().maximize();
+
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+		driver.get("https://testautomationpractice.blogspot.com/");
+
+		// Type in Last Name:
+		driver.findElement(By.id("Wikipedia1_wikipedia-search-input")).sendKeys("Shantanu");
+		driver.findElement(By.cssSelector("input[type='submit']")).click();
+
+		// Print out the total number search results
+		WebElement wiki = driver.findElement(By.id("Wikipedia1_wikipedia-search-results"));
+
+		List<WebElement> Wikilinks = wiki.findElements(By.tagName("a"));
+		System.out.println("Total number of Search Results: " + Wikilinks.size());
+
+		// Click on every search result
+		for (int i = 1; i < Wikilinks.size(); i++) {
+			String clickonlinks = Keys.chord(Keys.CONTROL, Keys.ENTER);
+			Wikilinks.get(i).sendKeys(clickonlinks);
+		}
+
+		// Click on all the tabs - BONUS
+		Set<String> tabs = driver.getWindowHandles();
+		Iterator<String> it = tabs.iterator();
+
+		while (it.hasNext()) {
+			driver.switchTo().window(it.next());
+			System.out.println(driver.getTitle());
+		}
+
+		// Close everything in one command
+		driver.quit();
+
+		System.out.println("Test Passed");
+
+	}
+
+}
